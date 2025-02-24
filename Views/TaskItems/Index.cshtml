@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MultiTenantTaskManager.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                    <p class="card-text"><strong>Status:</strong> @Html.DisplayFor(modelItem => item.Status)</p>
+                    <p class="card-text"><strong>Assigned To:</strong> @Html.DisplayFor(modelItem => item.AssignedToUserId)</p>
+                    <p class="card-text"><strong>Tenant:</strong> @Html.DisplayFor(modelItem => item.TenantId)</p>
+
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                        var isAdmin = User.IsInRole("Admin");
+
+                        if (item.AssignedToUserId == userId || isAdmin)
+                        {
+                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    }
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                 
+                </div>
+            </div>
+        </div>
+    }
+</div>

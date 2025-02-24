@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTenantTaskManager", "MultiTenantTaskManager.csproj", "{780526CF-68E9-443E-985E-687128C376A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{780526CF-68E9-443E-985E-687128C376A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{780526CF-68E9-443E-985E-687128C376A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{780526CF-68E9-443E-985E-687128C376A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{780526CF-68E9-443E-985E-687128C376A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6499BA07-6357-4B43-BBD2-90946E914B9B}
+	EndGlobalSection
+EndGlobal

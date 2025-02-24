@@ -1,0 +1,38 @@
+﻿@model MultiTenantTaskManager.ViewModel.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout"; // Use your main layout
+}
+
+<h1>Login</h1>
+
+<form asp-action="Login" method="post" class="form-horizontal" aria-labelledby="loginForm">
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" aria-required="true" aria-describedby="EmailHelp" />
+        <span asp-validation-for="Email" class="text-danger" id="EmailHelp"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" type="password" aria-required="true" aria-describedby="passwordHelp" />
+        <span asp-validation-for="Password" class="text-danger" id="passwordHelp"></span>
+    </div>
+    <div class="form-group">
+        <input type="checkbox" asp-for="RememberMe" id="rememberMe" />
+        <label asp-for="RememberMe" for="rememberMe"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<div>
+    <p>
+        <a asp-action="Register">Register as a new user</a>
+    </p>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

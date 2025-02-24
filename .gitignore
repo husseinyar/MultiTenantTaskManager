@@ -1,0 +1,11 @@
+# .gitignore
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+appsettings.json
+appsettings.Development.json
+secrets.json
+bin/
+obj/
