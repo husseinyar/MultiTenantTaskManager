@@ -9,7 +9,7 @@ using MultiTenantTaskManager.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Add session support
+// Add session support
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -17,20 +17,19 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// ✅ Add MVC with Views
+// Add MVC with Views
 builder.Services.AddControllersWithViews();
 
-// ✅ Configure Database
+// Configure Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ✅ Configure Identity
+// Configure Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-
-// ✅ Configure JWT Authentication
+// Configure JWT Authentication
 var jwtSecret = builder.Configuration["Jwt:Secret"];
 if (string.IsNullOrEmpty(jwtSecret))
 {
@@ -53,42 +52,47 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// ✅ Enable API controllers
+// Enable API controllers
 builder.Services.AddControllers();
 
-// ✅ Add Swagger for API documentation
+// Add Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Register the SeedData service
+//builder.Services.AddHostedService<SeedData>();
+
 var app = builder.Build();
 
-// ✅ Enforce HTTPS redirection
+// Enforce HTTPS redirection
 app.UseHttpsRedirection();
 
-// ✅ Enable Swagger UI
+// Enable Swagger UI
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// ✅ Enable Sessions
+// Enable Sessions
 app.UseSession();
 
-// ✅ Enable Authentication & Authorization Middleware
+// Enable Authentication & Authorization Middleware
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Middleware to extract JWT from cookies and set User.Identity
+// Middleware to extract JWT from cookies and set User.Identity
 app.Use(async (context, next) =>
 {
+    // Skip JWT validation for the registration page
+    if (context.Request.Path.StartsWithSegments("/Account/Register"))
+    {
+        await next();
+        return;
+    }
+
     var token = context.Request.Cookies["AuthToken"];
     if (!string.IsNullOrEmpty(token))
     {
-        var jwtSecret = builder.Configuration["Jwt:Secret"];
-        if (string.IsNullOrEmpty(jwtSecret))
-        {
-            throw new ArgumentNullException(nameof(jwtSecret), "JWT secret key is not configured.");
-        }
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]);
+        var key = Encoding.UTF8.GetBytes(jwtSecret);
 
         var claimsPrincipal = tokenHandler.ValidateToken(token, new TokenValidationParameters
         {
@@ -108,10 +112,33 @@ app.Use(async (context, next) =>
     await next();
 });
 
-// ✅ Configure default route (MVC support)
+// Configure default route (MVC support)
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// ✅ Run the app
+// Run the app
 app.Run();
+
+
+
+/*
+  {
+    "id": "04e83cc0-0e51-4392-ac35-d62b8641743b",
+    "fullName": "Admin",
+    "email": "Hus1@gmail.com",
+    "userName": "Hus1@gmail.com",
+    "roles": [
+      "Employee"
+    ]
+  },
+  {
+    "id": "083fbb5a-aa65-495a-a36d-e1faa9932368",
+    "fullName": "Admin",
+    "email": "Admin@gmail.com",
+    "userName": "Admin@gmail.com",
+    "roles": [
+      "Employee"
+    ]
+  }
+]*/

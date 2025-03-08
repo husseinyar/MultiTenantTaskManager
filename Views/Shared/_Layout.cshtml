@@ -26,12 +26,17 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                           
-                               
+
+                         
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="/Tenant/Index">Tenants</a>
+                                <a  class="nav-link" href="/Tenant/Index">Tenants</a>
                             </li>
+
+
+                                    <li class="nav-item">
+                                <a class="nav-link" href="/Manger/Index">Admin</a>
+                                    </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/TaskItems/Index">Tasks</a>
                             </li>

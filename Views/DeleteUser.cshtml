@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Delete User";
+}
+
+<h1>Delete User</h1>
+
+<form asp-action="DeleteUser" method="post" class="form-horizontal">
+    <div class="form-group mb-3">
+        <label for="username" class="control-label">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="Enter username" />
+    </div>
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-danger btn-lg">Delete User</button>
+    </div>
+</form>

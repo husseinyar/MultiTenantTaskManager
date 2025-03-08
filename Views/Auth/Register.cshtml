@@ -18,27 +18,28 @@
                             <input asp-for="Username" class="form-control" placeholder="Enter your username" />
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
-                       
-                            <div class="form-group mb-3">
-                                <label asp-for="FullName" class="control-label"></label>
-                                <input asp-for="FullName" class="form-control" placeholder="Enter your username" />
-                                <span asp-validation-for="FullName" class="text-danger"></span>
-                                <span asp-validation-for="FullName" class="text-danger"></span>
-                            </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="FullName" class="control-label"></label>
+                            <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="Email" class="control-label"></label>
                             <input asp-for="Email" class="form-control" placeholder="Enter your email" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mb-3">
                             <label asp-for="Password" class="control-label"></label>
                             <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group mb-3">
-                            <label asp-for="ConfirmPassword" class="control-label"></label>
-                            <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="Confirm your password" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            <label asp-for="TenantId" class="control-label"></label>
+                            <input asp-for="TenantId" class="form-control" placeholder="Enter your TenantId" />
+                            <span asp-validation-for="TenantId" class="text-danger"></span>
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary btn-lg">Register</button>

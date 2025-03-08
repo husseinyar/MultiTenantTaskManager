@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MultiTenantTaskManager.Models;
 using MultiTenantTaskManager.ViewModel;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,13 +12,11 @@ using System.Threading.Tasks;
 
 namespace MultiTenantTaskManager.Controllers
 {
-    
     public class AuthController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-       
 
         public AuthController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
@@ -50,13 +47,13 @@ namespace MultiTenantTaskManager.Controllers
             return Ok(userList);
         }
 
-        [HttpGet("register")]
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (!ModelState.IsValid)
@@ -69,7 +66,7 @@ namespace MultiTenantTaskManager.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 FullName = model.FullName,
-                TenantId = model.TenantId
+                TenantId = model.TenantId,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -80,17 +77,17 @@ namespace MultiTenantTaskManager.Controllers
                 return View(model);
             }
 
-            await _userManager.AddToRoleAsync(user, "Employee");
+            await _userManager.AddToRoleAsync(user, "Admin");
             return RedirectToAction("Login");
         }
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-
-       [HttpPost("Auth/login")]
+        [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
             if (!ModelState.IsValid)
@@ -106,11 +103,11 @@ namespace MultiTenantTaskManager.Controllers
             }
 
             var authClaims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id),
-        new Claim(ClaimTypes.Email, user.Email),
-        new Claim("TenantId", user.TenantId ?? "")
-    };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("TenantId", user.TenantId ?? "")
+            };
 
             var userRoles = await _userManager.GetRolesAsync(user);
             foreach (var role in userRoles)
@@ -136,7 +133,6 @@ namespace MultiTenantTaskManager.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
         private string GenerateJwtToken(List<Claim> authClaims)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
@@ -144,7 +140,7 @@ namespace MultiTenantTaskManager.Controllers
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],  // ✅ Make sure this is set!
+                audience: _configuration["Jwt:Audience"],
                 claims: authClaims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: credentials
@@ -152,19 +148,16 @@ namespace MultiTenantTaskManager.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         [HttpPost]
-
-
         public async Task<IActionResult> Logout()
         {
             // Remove token from session (optional)
             HttpContext.Session.Remove("AuthToken");
             // Remove token from cookie
             Response.Cookies.Delete("AuthToken");
-            return RedirectToAction("login");       
-
+            return RedirectToAction("Login");
         }
-
-
     }
 }
+
