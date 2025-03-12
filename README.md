@@ -35,7 +35,7 @@ Clone the Repository
 
 bash
 Copy
-git clone https://github.com/husseinyar/multi-tenant-task-manager.git](https://github.com/husseinyar/MultiTenantTaskManager.git.
+git clone https://github.com/husseinyar/MultiTenantTaskManager.
 cd multi-tenant-task-manager
 Set Up the Database
 
