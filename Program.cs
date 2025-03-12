@@ -121,24 +121,3 @@ app.MapControllerRoute(
 app.Run();
 
 
-
-/*
-  {
-    "id": "04e83cc0-0e51-4392-ac35-d62b8641743b",
-    "fullName": "Admin",
-    "email": "Hus1@gmail.com",
-    "userName": "Hus1@gmail.com",
-    "roles": [
-      "Employee"
-    ]
-  },
-  {
-    "id": "083fbb5a-aa65-495a-a36d-e1faa9932368",
-    "fullName": "Admin",
-    "email": "Admin@gmail.com",
-    "userName": "Admin@gmail.com",
-    "roles": [
-      "Employee"
-    ]
-  }
-]*/

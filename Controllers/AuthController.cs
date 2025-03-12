@@ -87,6 +87,7 @@ namespace MultiTenantTaskManager.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -103,11 +104,11 @@ namespace MultiTenantTaskManager.Controllers
             }
 
             var authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim("TenantId", user.TenantId ?? "")
-            };
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim("TenantId", user.TenantId ?? "")
+    };
 
             var userRoles = await _userManager.GetRolesAsync(user);
             foreach (var role in userRoles)
@@ -148,6 +149,7 @@ namespace MultiTenantTaskManager.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()

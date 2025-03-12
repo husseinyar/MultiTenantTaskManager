@@ -1,4 +1,4 @@
-﻿@model MultiTenantTaskManager.Models.RegisterModel
+﻿@model MultiTenantTaskManager.ViewModel.CreateUserViewModel
 
 @{
     ViewData["Title"] = "Create User";
@@ -8,24 +8,34 @@
 
 <form asp-action="CreateUser" method="post" class="form-horizontal">
     <div class="form-group mb-3">
-        <label asp-for="Username" class="control-label"></label>
-        <input asp-for="Username" class="form-control" placeholder="Enter username" />
-        <span asp-validation-for="Username" class="text-danger"></span>
+        <label asp-for="RegisterModel.Username" class="control-label"></label>
+        <input asp-for="RegisterModel.Username" class="form-control" placeholder="Enter username" />
+        <span asp-validation-for="RegisterModel.Username" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
-        <label asp-for="FullName" class="control-label"></label>
-        <input asp-for="FullName" class="form-control" placeholder="Enter full name" />
-        <span asp-validation-for="FullName" class="text-danger"></span>
+        <label asp-for="RegisterModel.FullName" class="control-label"></label>
+        <input asp-for="RegisterModel.FullName" class="form-control" placeholder="Enter full name" />
+        <span asp-validation-for="RegisterModel.FullName" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" placeholder="Enter email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+        <label asp-for="RegisterModel.Email" class="control-label"></label>
+        <input asp-for="RegisterModel.Email" class="form-control" placeholder="Enter email" />
+        <span asp-validation-for="RegisterModel.Email" class="text-danger"></span>
     </div>
     <div class="form-group mb-3">
-        <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" type="password" placeholder="Enter password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+        <label asp-for="RegisterModel.Password" class="control-label"></label>
+        <input asp-for="RegisterModel.Password" class="form-control" type="password" placeholder="Enter password" />
+        <span asp-validation-for="RegisterModel.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="RegisterModel.TenantId" class="control-label"></label>
+        <select asp-for="RegisterModel.TenantId" class="form-control" asp-items="Model.TenantIds"></select>
+        <span asp-validation-for="RegisterModel.TenantId" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="RegisterModel.Role" class="control-label"></label>
+        <select asp-for="RegisterModel.Role" class="form-control" asp-items="Model.Roles"></select>
+        <span asp-validation-for="RegisterModel.Role" class="text-danger"></span>
     </div>
     <div class="form-group text-center">
         <button type="submit" class="btn btn-primary btn-lg">Create User</button>
